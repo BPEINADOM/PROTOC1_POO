@@ -1,0 +1,72 @@
+@startuml Sistema Educativo 
+
+class CentroEducativo{
+    - String nombre;
+    - String direccion;
+    - List<Curso> cursos;
+    - List<Profesor> profesores;
+}
+
+class Curso{
+    - int id;
+    - String nombre;
+    - Profesor profesor;
+    - Aula aula;
+}
+
+class Profesor{
+    - String nombre;
+    - String apellidos;
+    - String correo;
+    - String especializacion;
+    - Date fecha_nacimiento;
+}
+
+class Estudiante{
+    - String nombre;
+    - String apellidos;
+    - String correo;
+    - Date fecha_nacimiento;
+}
+
+class Evaluacion{
+    - String nombre;
+    - Estudiante estudiante;
+    - Profesor profesor;
+    - Curso curso;
+}
+
+class Aula{
+    - String nombre;
+    - Curso curso;
+}
+
+class Horario{
+    - String nombre;
+    - String evento;
+    - Date fecha;
+    - Curso curso;
+}
+
+class Material{
+    - String nombre;
+    - Curso curso;
+    - Profesor profesor;
+}
+
+' RELACIONES
+
+CentroEducativo "1" -- "*" Curso : Tener
+CentroEducativo "1" -- "*" Profesor : Tener
+Estudiante "*" -- "1" CentroEducativo : Pertenecer
+Estudiante "1" -- "*" Curso : Matricular
+Estudiante "1" -- "*" Material : Estudiar
+Estudiante "*" -- "1" Horario : Asignar
+Estudiante "*" -- "1" Evaluacion : Presentar
+Profesor "1" -- "*" Curso : Especializarse
+Profesor "1" -- "*" Estudiante : Enseñar
+Profesor "1" -- "*" Material : Brindar
+Curso "1" -- "1" Aula : Pertenecer
+Aula "1" -- "*" Estudiante : Estar
+Evaluacion "1" -- "*" Estudiante : Evaluar
+Horario "1" -- "*" Curso : Tener
